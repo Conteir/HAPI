@@ -110,6 +110,14 @@ class MyPage extends React.Component {
       uglyId: '',
       response: ''
     };
+    this.state = { 
+      codeSystem: '',
+      response: ''
+    };
+    this.state = { 
+      code: '',
+      response: ''
+    };
 
   }
 
@@ -121,7 +129,9 @@ class MyPage extends React.Component {
   
   mySubmitHandler = (event) => {
     event.preventDefault();
+    if (this.state.uglyId!=null) {
     //alert("You are sending " + this.state.uglyId);
+
     fetch('https://api.helsedirektoratet.no/innhold/innhold/' + this.state.uglyId,
     {
       method: 'GET',
@@ -131,8 +141,28 @@ class MyPage extends React.Component {
       }
     }
     )
+  
+    
     .then(response => response.json())
     .then(data => this.responseHandler(data));
+  }
+
+  else {
+    fetch('https://api.helsedirektoratet.no/innhold/innhold?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code,
+    {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Ocp-Apim-Subscription-Key' : '89b72a3ad5cf4723b3f489c3eb4d82a1'
+      }
+    }
+    )
+  
+    
+    .then(response => response.json())
+    .then(data => this.responseHandler(data));
+  }
+
   }
 
   responseHandler = (data) => {
@@ -148,19 +178,50 @@ class MyPage extends React.Component {
       uglyId: event.target.value
     });
   }
+  ChangeHandlerCode = (event) => {
+    this.setState({
+      code: event.target.value
+    });
+  }
+  ChangeHandlerCodeSystem = (event) => {
+    this.setState({
+      codeSystem: event.target.value
+    });
+  }
 
   render() {
     return (
       <div>
         <form onSubmit={this.mySubmitHandler}>
-          <p>Put your id, and submit:</p>
+          <p>Please provide either HAPI-id or code from a code system</p>
           <input
+            id="id"
             type='text'
+            autoComplete="off"
+            placeholder="HAPI-id"
             value={this.state.uglyId}
             onChange={evt => this.myChangeHandler(evt)}
           />
+          <span class="marginRight">or</span>
+            <input
+            id="codeSystem"
+            type='text'
+            autoComplete="off"
+            placeholder="Code system"
+            value={this.state.codeSystem}
+            onChange={evt => this.ChangeHandlerCodeSystem(evt)}
+          />
+           <input
+            type='text'
+            autoComplete="off"
+            id="code"
+            placeholder="Code"
+            value={this.state.code}
+            onChange={evt => this.ChangeHandlerCode(evt)}
+          />
           <input
             type='submit'
+            value="поиск"
           />
         </form>
         <div><pre>{this.state.response}</pre></div>
