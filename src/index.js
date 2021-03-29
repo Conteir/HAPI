@@ -3,103 +3,6 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 //import App from './App';
-//import reportWebVitals from './reportWebVitals';
-
-/*const mysecondelement = (
-<ul>
-  <h1>Put your request here:</h1>
-  <textarea for="inputId" id="inputId" placeholder="yes, here..."></textarea>
-  <button onclick="activateLasers()">Send the request</button>
-</ul>
-);
-*/
-
-
-//const myfirstelement = <button onclick="activateLasers()">Send</button>
-
- /* const textcomponent = () => (
-  <div>
-    <h1>Put your request here:</h1>
-  </div>
-);
-
-const areacomponent = () => (
-  <div>
-    <textarea for="inputId" id="inputId" placeholder="yes, here..."></textarea>
-  </div>
-);
-
-const buttoncomponent = () => (
-  <div>
-    <button onclick="activateLasers()">Send the request</button>
-  </div>
-);
-
-ReactDOM.render(
-  <div>
-    <textcomponent />
-    <areacomponent />
-    <buttoncomponent />
-  </div>, document.getElementById("root")
-);
-*/
-
-
-/*
-const buttoncomponent = () => {
-  const handleClick = () => console.log('here');
-    return (
-      <div>
-        <button onClick={handleClick}>Click here:</button>
-      </div>
-  );
-};
-
-const TextAreaComponent = () => {
-  const [textAreaComponentValue, setTextAreaComponentValue] = useState<string>("");
-    return (
-      <textarea 
-        value={textAreaComponentValue} 
-        onChange={(
-          ev: React.ChangeEvent<HTMLTextAreaElement>,
-          ) : void => setTextAreaComponentValue(ev.target.value)}
-      />
-    );
-};
-
-const textcomponent = () =>
-  <p>Put here</p>
-;
-
-ReactDOM.render(
-  <div>
-    <textcomponent />
-    <areacomponent />
-    <buttoncomponent />
-  </div>,
-  document.querySelector('#root')
-);
-*/
-
-
-/*
-ReactDOM.render(
-  const mysecondelement = <h1>Send</h1>;
-, document.getElementById('root')
-  );*/
-
-  /*<React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-  
-);
-*/
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-
 
 class MyPage extends React.Component {
 
@@ -108,61 +11,42 @@ class MyPage extends React.Component {
 
     this.state = { 
       uglyId: '',
-      response: ''
-    };
-    this.state = { 
-      codeSystem: '',
-      response: ''
-    };
-    this.state = { 
-      code: '',
-      response: ''
+      codeSystem: 'icpc-2', //values for checking
+      code: 'x76',
+      url: '',
+      response: '',
+      records: [],
     };
 
   }
-
-  /* componentDidMount() {
-    fetch('https://api.helsedirektoratet.no/innhold/innhold?q=react')
-        .then(response => response.json())
-        .then(data => this.setState({ uglyId: data.total }) );
-  }; */
   
   mySubmitHandler = (event) => {
     event.preventDefault();
-    if (this.state.uglyId!=null) {
-    //alert("You are sending " + this.state.uglyId);
 
-    fetch('https://api.helsedirektoratet.no/innhold/innhold/' + this.state.uglyId,
-    {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Ocp-Apim-Subscription-Key' : '89b72a3ad5cf4723b3f489c3eb4d82a1'
-      }
+    const urlAddress = 'https://api.helsedirektoratet.no/innhold/innhold';
+
+    let url = urlAddress;
+    if (this.state.uglyId) {
+      url += '/' + this.state.uglyId;
+    } else if(this.state.codeSystem && this.state.code) {
+      url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
+    } else {
+      url += this.state.uglyId;
     }
-    )
-  
-    
+
+    this.setState({url: url});
+
+    fetch(url,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Ocp-Apim-Subscription-Key' : '89b72a3ad5cf4723b3f489c3eb4d82a1'
+        }
+      }
+      )
     .then(response => response.json())
     .then(data => this.responseHandler(data));
-  }
-
-  else {
-    fetch('https://api.helsedirektoratet.no/innhold/innhold?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code,
-    {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Ocp-Apim-Subscription-Key' : '89b72a3ad5cf4723b3f489c3eb4d82a1'
-      }
-    }
-    )
-  
-    
-    .then(response => response.json())
-    .then(data => this.responseHandler(data));
-  }
-
   }
 
   responseHandler = (data) => {
@@ -192,6 +76,7 @@ class MyPage extends React.Component {
   render() {
     return (
       <div>
+
         <form onSubmit={this.mySubmitHandler}>
           <p>Please provide either HAPI-id or code from a code system</p>
           <input
@@ -202,6 +87,7 @@ class MyPage extends React.Component {
             value={this.state.uglyId}
             onChange={evt => this.myChangeHandler(evt)}
           />
+
           <span class="marginRight">or</span>
             <input
             id="codeSystem"
@@ -211,6 +97,7 @@ class MyPage extends React.Component {
             value={this.state.codeSystem}
             onChange={evt => this.ChangeHandlerCodeSystem(evt)}
           />
+
            <input
             type='text'
             autoComplete="off"
@@ -219,12 +106,19 @@ class MyPage extends React.Component {
             value={this.state.code}
             onChange={evt => this.ChangeHandlerCode(evt)}
           />
+
           <input
             type='submit'
             value="поиск"
           />
         </form>
+
         <div><pre>{this.state.response}</pre></div>
+        <div>here is the next part</div>
+
+        <div><pre>{this.state.response}</pre></div>
+        <div>{this.state.url}</div>
+
       </div>
     );
   }
