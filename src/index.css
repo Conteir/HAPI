@@ -25,3 +25,15 @@ input {
 .marginRight {
   margin-right: 20px;
 }
+
+table, th, td {
+  border: 1px solid lightgrey;
+  border-collapse: collapse;
+}
+
+table > tbody > tr > td {padding: 5px;}
+table > tbody > tr > td:first-child {font-weight: bold;}
+
+div.content {
+  margin-top: 10px;
+}
