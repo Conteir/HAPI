@@ -73,6 +73,46 @@ class MyPage extends React.Component {
     });
   }
 
+  renderJson() {
+    if(this.state.response) {
+      let json = JSON.parse(this.state.response);
+      console.log(json);
+  
+      return json.map((item, index) =>
+        <div key={index}>
+          <table><tbody>
+  
+              <tr>
+                <td style={{fontWeight: "bold"}}>Id</td><td>{item.id ? item.id : ''}</td>
+              </tr>
+  
+              <tr>
+                <td style={{fontWeight: "bold"}}>intro</td><td>{item.intro ? item.id : ''}</td>
+              </tr>
+  
+              <tr>
+                <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
+              </tr>
+  
+              <tr>
+                <td>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
+              </tr>
+  
+  
+  
+            </tbody></table>
+  
+            <div className="content">
+              <div><h1>{item.tittel}</h1></div>
+              <div dangerouslySetInnerHTML={{ __html: item.tekst}}></div>
+            </div>
+  
+        </div>);
+    }
+    return '';
+  }
+
+
   render() {
     return (
       <div>
@@ -88,7 +128,7 @@ class MyPage extends React.Component {
             onChange={evt => this.myChangeHandler(evt)}
           />
 
-          <span class="marginRight">or</span>
+          <span className="marginRight">or</span>
             <input
             id="codeSystem"
             type='text'
@@ -114,9 +154,9 @@ class MyPage extends React.Component {
         </form>
 
         <div><pre>{this.state.response}</pre></div>
-        <div>here is the next part</div>
+        <div>here is the HTML part</div>
 
-        <div><pre>{this.state.response}</pre></div>
+        <div>{this.renderJson()}</div>
         <div>{this.state.url}</div>
 
       </div>
