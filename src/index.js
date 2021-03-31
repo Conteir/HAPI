@@ -79,8 +79,10 @@ class MyPage extends React.Component {
       let json = JSON.parse(this.state.response);
       console.log(json);
   
-      return json.map((item, index) =>
+      if(Array.isArray(json)) {
+        return json.map((item, index) =>
         <div key={index}>
+
           <table><tbody>
   
               <tr>
@@ -93,6 +95,14 @@ class MyPage extends React.Component {
   
               <tr>
                 <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
+              </tr>
+
+              <tr>
+                <td>Title</td><td>{item.tittel ? item.tittel : ''}</td>
+              </tr>
+
+              <tr>
+                <td>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
               </tr>
   
               <tr>
@@ -107,10 +117,52 @@ class MyPage extends React.Component {
             </div>
   
         </div>);
+      } else {
+      let item = json;
+      return (
+        <div>
+  
+          <table><tbody>
+  
+              <tr>
+                <td style={{fontWeight: "bold"}}>Id</td><td>{item.id ? item.id : ''}</td>
+              </tr>
+  
+              <tr>
+                <td style={{fontWeight: "bold"}}>Title</td><td>{item.tittel ? item.tittel : ''}</td>
+              </tr>
+  
+              <tr>
+                <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
+              </tr>
+  
+              <tr>
+                <td>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
+              </tr>
+  
+              <tr>
+                <td style={{fontWeight: "bold"}}>intro</td><td>{item.intro ? item.intro : ''}</td>
+              </tr>
+  
+              <tr>
+                <td style={{fontWeight: "bold"}}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
+              </tr>
+  
+            </tbody></table>
+  
+            <div className="content">
+              <div><h1>{item.tittel}</h1></div>
+              <div dangerouslySetInnerHTML={{ __html: item.tekst}}></div>
+        
+              <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale}}></div>
+  
+            </div>
+  
+        </div>);
+      }
     }
     return '';
-  }
-
+}
 
   render() {
     return (
