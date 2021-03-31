@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-//import App from './App';
 
 class MyPage extends React.Component {
 
@@ -11,8 +10,8 @@ class MyPage extends React.Component {
 
     this.state = { 
       uglyId: '',
-      codeSystem: 'icpc-2', //values for checking
-      code: 'x76',
+      codeSystemICD: '', 
+      codeICD: '',
       url: '',
       response: '',
       records: [],
@@ -30,6 +29,8 @@ class MyPage extends React.Component {
       url += '/' + this.state.uglyId;
     } else if(this.state.codeSystem && this.state.code) {
       url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
+    } else if(this.state.codeSystemICD && this.state.codeICD) {
+      url += '?kodeverk=' + this.state.codeSystemICD + "&kode=" + this.state.codeICD;
     } else {
       url += this.state.uglyId;
     }
@@ -97,9 +98,7 @@ class MyPage extends React.Component {
               <tr>
                 <td>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
               </tr>
-  
-  
-  
+    
             </tbody></table>
   
             <div className="content">
@@ -153,10 +152,12 @@ class MyPage extends React.Component {
           />
         </form>
 
-        <div><pre>{this.state.response}</pre></div>
-        <div>here is the HTML part</div>
 
         <div>{this.renderJson()}</div>
+        <div>here is the 2 part</div>
+
+        <div><pre>{this.state.response}</pre></div>
+
         <div>{this.state.url}</div>
 
       </div>
