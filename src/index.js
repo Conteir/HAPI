@@ -76,8 +76,8 @@ class MyPage extends React.Component {
 
   renderJson() {
     if(this.state.response) {
-      let json = JSON.parse(this.state.response);
-      console.log(json);
+        let json = JSON.parse(this.state.response);
+        console.log(json);
   
       if(Array.isArray(json)) {
         return json.map((item, index) =>
@@ -147,6 +147,21 @@ class MyPage extends React.Component {
               <tr>
                 <td style={{fontWeight: "bold"}}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
               </tr>
+
+
+            <tr>
+              <td style={{fontWeight: "bold"}}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
+            </tr>
+            <tr>
+              <td style={{fontWeight: "bold"}}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
+            </tr>
+            <tr>
+              <td style={{fontWeight: "bold"}}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
+            </tr>
+
+            <tr>
+              <td colSpan="2">{this.renderLinks(item.links)}</td>
+            </tr>
   
             </tbody></table>
   
@@ -163,6 +178,37 @@ class MyPage extends React.Component {
     }
     return '';
 }
+
+
+
+renderLinks(links) {
+  return links.map( (item, index) =>
+  <div key={index}>
+
+    <table><tbody>
+
+        <tr>
+          <td style={{fontWeight: "bold"}}>Rel</td><td>{item.rel ? item.rel : ''}</td>
+        </tr>
+
+        <tr>
+          <td style={{fontWeight: "bold"}}>Type</td><td>{item.type ? item.type : ''}</td>
+        </tr>
+
+        <tr>
+          <td>Href</td><td>{item.href ? item.href : ''}</td>
+        </tr>
+
+        <tr>
+          <td>Struktur Id</td><td>{item.strukturId ? item.strukturId : ''}</td>
+        </tr>
+
+
+    </tbody></table>
+
+  </div>);
+}
+
 
   render() {
     return (
@@ -206,7 +252,7 @@ class MyPage extends React.Component {
 
 
         <div>{this.renderJson()}</div>
-        <div>here is the 2 part</div>
+        <div>here is the JSON part</div>
 
         <div><pre>{this.state.response}</pre></div>
 
