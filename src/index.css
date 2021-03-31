@@ -29,6 +29,7 @@ input {
 table, th, td {
   border: 1px solid lightgrey;
   border-collapse: collapse;
+  margin: 10px 0;
 }
 
 table > tbody > tr > td {padding: 5px;}
