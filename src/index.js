@@ -224,7 +224,7 @@ class MyPage extends React.Component {
           <input
             id="id"
             type='text'
-            autoComplete="off"
+            autoComplete="on"
             placeholder="HAPI-id"
             value={this.state.uglyId}
             onChange={evt => this.myChangeHandler(evt)}
@@ -244,7 +244,7 @@ class MyPage extends React.Component {
 
           <input
             type='text'
-            autoComplete="off"
+            autoComplete="on"
             id="code"
             placeholder="Code"
             value={this.state.code}
