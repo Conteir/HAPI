@@ -90,10 +90,11 @@ class MyPage extends React.Component {
 
             <div><h1>{item.tittel}</h1></div>
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
-            <CollapsibleComponent name={item.id}>
-              <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>
+            <CollapsibleComponent name={item.id}> 
+            {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:null} 
               <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
               </CollapsibleContent>
+      
               <CollapsibleHead><h2>Metadata</h2></CollapsibleHead>
               <CollapsibleContent>
                 <table><tbody>
@@ -136,7 +137,7 @@ class MyPage extends React.Component {
             <div><h1>{item.tittel}</h1></div>
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
             <CollapsibleComponent>
-              <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>
+            {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:null} 
               <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div></CollapsibleContent>
               <CollapsibleHead><h2>Metadata</h2></CollapsibleHead>
               <CollapsibleContent>
