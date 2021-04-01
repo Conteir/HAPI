@@ -33,8 +33,6 @@ class MyPage extends React.Component {
       url += '/' + this.state.uglyId;
     } else if (this.state.codeSystem && this.state.code) {
       url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
-    } else if (this.state.codeSystemICD && this.state.codeICD) {
-      url += '?kodeverk=' + this.state.codeSystemICD + "&kode=" + this.state.codeICD;
     } else {
       url += this.state.uglyId;
     }
@@ -84,6 +82,7 @@ class MyPage extends React.Component {
       console.log(json);
 
       if (Array.isArray(json)) {
+        console.log(json);
         return json.map((item, index) =>
           <div key={index}>
 
@@ -104,19 +103,15 @@ class MyPage extends React.Component {
               </tr>
 
               <tr>
-                <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
+                <td style={{fontWeight: "bold"}}>Owner</td><td>{item.eier ? item.eier : ''}</td>
               </tr>
 
               <tr>
-                <td>Title</td><td>{item.tittel ? item.tittel : ''}</td>
+                <td style={{fontWeight: "bold"}}>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
               </tr>
 
               <tr>
-                <td>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
-              </tr>
-
-              <tr>
-                <td>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
+                <td style={{fontWeight: "bold"}}>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
               </tr>
 
             </tbody></table>
@@ -125,65 +120,98 @@ class MyPage extends React.Component {
 
           </div>);
       } else {
-        let item = json;
+      //if object (checking)
+      let item = json;
+      console.log(Array.isArray(item));
+      console.log('object');
+
         return (
           <div>
-            <div className="content">
-              <div><h1>{item.tittel}</h1></div>
-              <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
 
-              <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
+            <div className="content">
+                <div><h1>{item.tittel}</h1></div>
+                <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+                <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
 
             </div>
+
             <table><tbody>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>Id</td><td>{item.id ? item.id : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Id</td><td>{item.id ? item.id : ''}</td>
+                </tr>
+              
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Owner</td><td>{item.eier ? item.eier : ''}</td>
+                </tr>
+              
+                <tr>
+                  <td style={{fontWeight: "bold"}}>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
+                </tr>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>Title</td><td>{item.tittel ? item.tittel : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>intro</td><td>{item.intro ? item.intro : ''}</td>
+                </tr>
 
-              <tr>
-                <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
+                </tr>
 
-              <tr>
-                <td>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Code system</td><td>{item.koder.ICPC-2}</td>
+                </tr>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>intro</td><td>{item.intro ? item.intro : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Code system</td><td>{item.koder.ICD-10}</td>
+                </tr>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
+                </tr>
 
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
+                </tr>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: "bold" }}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: "bold" }}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
+                </tr>
 
-              <tr>
-                <td colSpan="2">{this.renderLinks(item.links)}</td>
-              </tr>
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Subtype</td><td>{(item.tekniskeData && item.tekniskeData.subType) ? item.tekniskeData.subType : ''}</td>
+                </tr>
+
+                <tr>
+                  <td style={{fontWeight: "bold"}}>HAPI id</td><td>{(item.tekniskeData && item.tekniskeData.HapiId) ? item.tekniskeData.HapiId : ''}</td>
+                </tr>
+
+                <tr>
+                  <td colSpan="2">{this.renderLinks(item.links)}</td>
+                </tr>
 
             </tbody></table>
+
+            <table><tbody>
+           
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Attachments</td><td>{item.attachments ? item.attachments : ''}</td>
+                </tr>
+
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Document type</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
+                </tr>
+
+                <tr>
+                  <td style={{fontWeight: "bold"}}>Last import to HAPI</td><td>{item.sistImportertTilHapi ? item.sistImportertTilHapi : ''}</td>
+                </tr>
+            
+          </tbody></table>
 
           </div>);
       }
     }
     return '';
   }
-
 
 
   renderLinks(links) {
@@ -260,10 +288,8 @@ class MyPage extends React.Component {
 
         <div>{this.renderJson()}</div>
         <div>here is the JSON part</div>
-
         <div><pre>{this.state.response}</pre></div>
-
-        <div>{this.state.url}</div>
+        <div><pre><h4>{this.state.url}</h4></pre></div>
 
       </div>
     );
