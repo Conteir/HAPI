@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import { codeSystems } from "./config";
+import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
+
 
 class MyPage extends React.Component {
 
@@ -16,9 +17,9 @@ class MyPage extends React.Component {
       url: '',
       response: '',
       records: [],
-      codeSystems: { codeSystems }
-    };
 
+    };
+  
   }
 
 
@@ -86,126 +87,132 @@ class MyPage extends React.Component {
         return json.map((item, index) =>
           <div key={index}>
 
-            <div className="content">
-              <div><h1>{item.tittel}</h1></div>
-              <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
-              <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
-            </div>
 
-            <table><tbody>
+            <div><h1>{item.tittel}</h1></div>
+            <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+            <CollapsibleComponent name={item.id}>
+              <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>
+              <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
+              </CollapsibleContent>
+              <CollapsibleHead><h2>Metadata</h2></CollapsibleHead>
+              <CollapsibleContent>
+                <table><tbody>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>Id</td><td>{item.id ? item.id : ''}</td>
-              </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Id</td><td>{item.id ? item.id : ''}</td>
+                  </tr>
 
-              <tr>
-                <td style={{ fontWeight: "bold" }}>intro</td><td>{item.intro ? item.id : ''}</td>
-              </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>intro</td><td>{item.intro ? item.id : ''}</td>
+                  </tr>
 
-              <tr>
-                <td style={{fontWeight: "bold"}}>Owner</td><td>{item.eier ? item.eier : ''}</td>
-              </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Owner</td><td>{item.eier ? item.eier : ''}</td>
+                  </tr>
 
-              <tr>
-                <td style={{fontWeight: "bold"}}>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
-              </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
+                  </tr>
 
-              <tr>
-                <td style={{fontWeight: "bold"}}>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
-              </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
+                  </tr>
 
-            </tbody></table>
-
-
+                </tbody></table>
+                </CollapsibleContent>
+                </CollapsibleComponent>
 
           </div>);
       } else {
-      //if object (checking)
-      let item = json;
-      console.log(Array.isArray(item));
-      console.log('object');
+        //if object (checking)
+        let item = json;
+        console.log(Array.isArray(item));
+        console.log('object');
 
         return (
           <div>
 
-            <div className="content">
-                <div><h1>{item.tittel}</h1></div>
-                <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
-                <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
 
-            </div>
+            <div><h1>{item.tittel}</h1></div>
+            <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+            <CollapsibleComponent>
+              <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>
+              <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div></CollapsibleContent>
+              <CollapsibleHead><h2>Metadata</h2></CollapsibleHead>
+              <CollapsibleContent>
+                <table><tbody>
 
-            <table><tbody>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Id</td><td>{item.id ? item.id : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Id</td><td>{item.id ? item.id : ''}</td>
-                </tr>
-              
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Owner</td><td>{item.eier ? item.eier : ''}</td>
-                </tr>
-              
-                <tr>
-                  <td style={{fontWeight: "bold"}}>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Owner</td><td>{item.eier ? item.eier : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>intro</td><td>{item.intro ? item.intro : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>intro</td><td>{item.intro ? item.intro : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Code system</td><td>{item.koder.ICPC-2}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Code system</td><td>{item.koder.ICD-10}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Code system</td><td>{item.koder.ICPC - 2}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Code system</td><td>{item.koder.ICD - 10}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Subtype</td><td>{(item.tekniskeData && item.tekniskeData.subType) ? item.tekniskeData.subType : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>HAPI id</td><td>{(item.tekniskeData && item.tekniskeData.HapiId) ? item.tekniskeData.HapiId : ''}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Subtype</td><td>{(item.tekniskeData && item.tekniskeData.subType) ? item.tekniskeData.subType : ''}</td>
+                  </tr>
 
-                <tr>
-                  <td colSpan="2">{this.renderLinks(item.links)}</td>
-                </tr>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>HAPI id</td><td>{(item.tekniskeData && item.tekniskeData.HapiId) ? item.tekniskeData.HapiId : ''}</td>
+                  </tr>
 
-            </tbody></table>
+                  <tr>
+                    <td colSpan="2">{this.renderLinks(item.links)}</td>
+                  </tr>
 
-            <table><tbody>
-           
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Attachments</td><td>{item.attachments ? item.attachments : ''}</td>
-                </tr>
+                </tbody></table>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Document type</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
-                </tr>
+                <table><tbody>
 
-                <tr>
-                  <td style={{fontWeight: "bold"}}>Last import to HAPI</td><td>{item.sistImportertTilHapi ? item.sistImportertTilHapi : ''}</td>
-                </tr>
-            
-          </tbody></table>
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Attachments</td><td>{item.attachments ? item.attachments : ''}</td>
+                  </tr>
+
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Document type</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
+                  </tr>
+
+                  <tr>
+                    <td style={{ fontWeight: "bold" }}>Last import to HAPI</td><td>{item.sistImportertTilHapi ? item.sistImportertTilHapi : ''}</td>
+                  </tr>
+
+                </tbody></table>
+              </CollapsibleContent>
+            </CollapsibleComponent>
 
           </div>);
       }
