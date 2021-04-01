@@ -2,23 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { codeSystems } from "./config";
 
 class MyPage extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       uglyId: '',
-      codeSystemICD: '', 
+      codeSystemICD: '',
       codeICD: '',
       url: '',
       response: '',
       records: [],
+      codeSystems: { codeSystems }
     };
 
   }
-  
+
+
+
   mySubmitHandler = (event) => {
     event.preventDefault();
 
@@ -27,31 +31,31 @@ class MyPage extends React.Component {
     let url = urlAddress;
     if (this.state.uglyId) {
       url += '/' + this.state.uglyId;
-    } else if(this.state.codeSystem && this.state.code) {
+    } else if (this.state.codeSystem && this.state.code) {
       url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
-    } else if(this.state.codeSystemICD && this.state.codeICD) {
+    } else if (this.state.codeSystemICD && this.state.codeICD) {
       url += '?kodeverk=' + this.state.codeSystemICD + "&kode=" + this.state.codeICD;
     } else {
       url += this.state.uglyId;
     }
 
-    this.setState({url: url});
+    this.setState({ url: url });
 
     fetch(url,
       {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
-          'Ocp-Apim-Subscription-Key' : '89b72a3ad5cf4723b3f489c3eb4d82a1'
+          'Ocp-Apim-Subscription-Key': '89b72a3ad5cf4723b3f489c3eb4d82a1'
         }
       }
-      )
-    .then(response => response.json())
-    .then(data => this.responseHandler(data));
+    )
+      .then(response => response.json())
+      .then(data => this.responseHandler(data));
   }
 
   responseHandler = (data) => {
-    if(data) {
+    if (data) {
       this.setState({
         response: JSON.stringify(data, null, 2)
       });
@@ -75,24 +79,30 @@ class MyPage extends React.Component {
   }
 
   renderJson() {
-    if(this.state.response) {
-        let json = JSON.parse(this.state.response);
-        console.log(json);
-  
-      if(Array.isArray(json)) {
-        return json.map((item, index) =>
-        <div key={index}>
+    if (this.state.response) {
+      let json = JSON.parse(this.state.response);
+      console.log(json);
 
-          <table><tbody>
-  
+      if (Array.isArray(json)) {
+        return json.map((item, index) =>
+          <div key={index}>
+
+            <div className="content">
+              <div><h1>{item.tittel}</h1></div>
+              <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+              <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
+            </div>
+
+            <table><tbody>
+
               <tr>
-                <td style={{fontWeight: "bold"}}>Id</td><td>{item.id ? item.id : ''}</td>
+                <td style={{ fontWeight: "bold" }}>Id</td><td>{item.id ? item.id : ''}</td>
               </tr>
-  
+
               <tr>
-                <td style={{fontWeight: "bold"}}>intro</td><td>{item.intro ? item.id : ''}</td>
+                <td style={{ fontWeight: "bold" }}>intro</td><td>{item.intro ? item.id : ''}</td>
               </tr>
-  
+
               <tr>
                 <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
               </tr>
@@ -104,110 +114,105 @@ class MyPage extends React.Component {
               <tr>
                 <td>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
               </tr>
-  
+
               <tr>
                 <td>DokumentType</td><td>{item.dokumentType ? item.dokumentType : ''}</td>
               </tr>
-    
+
             </tbody></table>
-  
+
+
+
+          </div>);
+      } else {
+        let item = json;
+        return (
+          <div>
             <div className="content">
               <div><h1>{item.tittel}</h1></div>
-              <div dangerouslySetInnerHTML={{ __html: item.tekst}}></div>
+              <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+
+              <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
+
             </div>
-  
-        </div>);
-      } else {
-      let item = json;
-      return (
-        <div>
-  
-          <table><tbody>
-  
+            <table><tbody>
+
               <tr>
-                <td style={{fontWeight: "bold"}}>Id</td><td>{item.id ? item.id : ''}</td>
+                <td style={{ fontWeight: "bold" }}>Id</td><td>{item.id ? item.id : ''}</td>
               </tr>
-  
+
               <tr>
-                <td style={{fontWeight: "bold"}}>Title</td><td>{item.tittel ? item.tittel : ''}</td>
+                <td style={{ fontWeight: "bold" }}>Title</td><td>{item.tittel ? item.tittel : ''}</td>
               </tr>
-  
+
               <tr>
                 <td>Owner</td><td>{item.eier ? item.eier : ''}</td>
               </tr>
-  
+
               <tr>
                 <td>FirstPublicated</td><td>{item.forstPublisert ? item.forstPublisert : ''}</td>
               </tr>
-  
+
               <tr>
-                <td style={{fontWeight: "bold"}}>intro</td><td>{item.intro ? item.intro : ''}</td>
-              </tr>
-  
-              <tr>
-                <td style={{fontWeight: "bold"}}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
+                <td style={{ fontWeight: "bold" }}>intro</td><td>{item.intro ? item.intro : ''}</td>
               </tr>
 
+              <tr>
+                <td style={{ fontWeight: "bold" }}>grouppeID</td><td>{item.gruppeId ? item.gruppeId : ''}</td>
+              </tr>
 
-            <tr>
-              <td style={{fontWeight: "bold"}}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
-            </tr>
-            <tr>
-              <td style={{fontWeight: "bold"}}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
-            </tr>
-            <tr>
-              <td style={{fontWeight: "bold"}}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
-            </tr>
 
-            <tr>
-              <td colSpan="2">{this.renderLinks(item.links)}</td>
-            </tr>
-  
+              <tr>
+                <td style={{ fontWeight: "bold" }}>Technical data</td><td>{item.tekniskeData ? '' : 'none'}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: "bold" }}>Info Id</td><td>{(item.tekniskeData && item.tekniskeData.infoId) ? item.tekniskeData.infoId : ''}</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: "bold" }}>Info type</td><td>{(item.tekniskeData && item.tekniskeData.infoType) ? item.tekniskeData.infoType : ''}</td>
+              </tr>
+
+              <tr>
+                <td colSpan="2">{this.renderLinks(item.links)}</td>
+              </tr>
+
             </tbody></table>
-  
-            <div className="content">
-              <div><h1>{item.tittel}</h1></div>
-              <div dangerouslySetInnerHTML={{ __html: item.tekst}}></div>
-        
-              <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale}}></div>
-  
-            </div>
-  
-        </div>);
+
+          </div>);
       }
     }
     return '';
-}
+  }
 
 
 
-renderLinks(links) {
-  return links.map( (item, index) =>
-  <div key={index}>
+  renderLinks(links) {
+    return links.map((item, index) =>
+      <div key={index}>
 
-    <table><tbody>
+        <table><tbody>
 
-        <tr>
-          <td style={{fontWeight: "bold"}}>Rel</td><td>{item.rel ? item.rel : ''}</td>
-        </tr>
+          <tr>
+            <td style={{ fontWeight: "bold" }}>Rel</td><td>{item.rel ? item.rel : ''}</td>
+          </tr>
 
-        <tr>
-          <td style={{fontWeight: "bold"}}>Type</td><td>{item.type ? item.type : ''}</td>
-        </tr>
+          <tr>
+            <td style={{ fontWeight: "bold" }}>Type</td><td>{item.type ? item.type : ''}</td>
+          </tr>
 
-        <tr>
-          <td>Href</td><td>{item.href ? item.href : ''}</td>
-        </tr>
+          <tr>
+            <td>Href</td><td>{item.href ? item.href : ''}</td>
+          </tr>
 
-        <tr>
-          <td>Struktur Id</td><td>{item.strukturId ? item.strukturId : ''}</td>
-        </tr>
+          <tr>
+            <td>Struktur Id</td><td>{item.strukturId ? item.strukturId : ''}</td>
+          </tr>
 
 
-    </tbody></table>
+        </tbody></table>
 
-  </div>);
-}
+      </div>);
+  }
 
 
   render() {
@@ -226,16 +231,18 @@ renderLinks(links) {
           />
 
           <span className="marginRight">or</span>
-            <input
-            id="codeSystem"
-            type='text'
-            autoComplete="off"
-            placeholder="Code system"
-            value={this.state.codeSystem}
-            onChange={evt => this.ChangeHandlerCodeSystem(evt)}
-          />
 
-           <input
+          <select name="codeSystem" id="codeSystem"
+            onChange={evt => this.ChangeHandlerCodeSystem(evt)}
+          >
+            <option value="" disabled selected hidden className="grey">Choose code system</option>
+            <option value="ICD-10">ICD-10</option>
+            <option value="ICPC-2">ICPC-2</option>
+            <option value="ATC">ATC</option>
+            <option value="SNOMED-CT">SNOMED-CT</option>
+          </select>
+
+          <input
             type='text'
             autoComplete="off"
             id="code"
