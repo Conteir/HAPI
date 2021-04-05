@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
+import { enviroments } from './config.ts';
 
 
 class MyPage extends React.Component {
@@ -12,31 +13,35 @@ class MyPage extends React.Component {
 
     this.state = {
       uglyId: '',
-      codeSystemICD: '',
-      codeICD: '',
+      codeSystem: '',
+      code: '',
       url: '',
       response: '',
       records: [],
+      enviroment: 'prod',
 
     };
   
   }
 
-
+  
 
   mySubmitHandler = (event) => {
     event.preventDefault();
 
-    const urlAddress = 'https://api.helsedirektoratet.no/innhold/innhold';
+    //const urlAddress = 'https://api.helsedirektoratet.no/innhold/innhold';
+    const enviroment = this.state.enviroment;
+    let setEnviroments = enviroments.find(o => o.id === enviroment);
 
-    let url = urlAddress;
+    let url = setEnviroments.url;
+    let key = setEnviroments.key
     if (this.state.uglyId) {
       url += '/' + this.state.uglyId;
-    } else if (this.state.codeSystem && this.state.code) {
-      url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
     } else {
-      url += this.state.uglyId;
-    }
+      url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
+    } 
+    
+   
 
     this.setState({ url: url });
 
@@ -45,7 +50,7 @@ class MyPage extends React.Component {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
-          'Ocp-Apim-Subscription-Key': '89b72a3ad5cf4723b3f489c3eb4d82a1'
+          'Ocp-Apim-Subscription-Key': key
         }
       }
     )
@@ -74,6 +79,12 @@ class MyPage extends React.Component {
   ChangeHandlerCodeSystem = (event) => {
     this.setState({
       codeSystem: event.target.value
+    });
+  }
+  ChangeHandlerEnviroment = (event) => {
+    this.setState({
+      enviroment: event.target.value
+    
     });
   }
 
@@ -138,7 +149,7 @@ class MyPage extends React.Component {
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
             <CollapsibleComponent>
             {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:null} 
-              <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div></CollapsibleContent>
+             <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div></CollapsibleContent>
               <CollapsibleHead><h2>Metadata</h2></CollapsibleHead>
               <CollapsibleContent>
                 <table><tbody>
@@ -256,6 +267,14 @@ class MyPage extends React.Component {
       <div>
 
         <form onSubmit={this.mySubmitHandler}>
+        <select name="enviroment" id="enviroment"
+            onChange={evt => this.ChangeHandlerEnviroment(evt)}
+          >
+         <option value="prod">Production</option>
+            <option value="test">Test</option>
+            <option value="qa">QA</option>
+            
+          </select>
           <p>Please provide either HAPI-id or code from a code system</p>
           <input
             id="id"
@@ -271,7 +290,7 @@ class MyPage extends React.Component {
           <select name="codeSystem" id="codeSystem"
             onChange={evt => this.ChangeHandlerCodeSystem(evt)}
           >
-            <option value="" disabled selected hidden className="grey">Choose code system</option>
+            <option value="" select="default">Choose code system</option>
             <option value="ICD-10">ICD-10</option>
             <option value="ICPC-2">ICPC-2</option>
             <option value="ATC">ATC</option>
@@ -304,6 +323,7 @@ class MyPage extends React.Component {
   }
 
 }
+
 
 ReactDOM.render(<MyPage />, document.getElementById('root'));
 
