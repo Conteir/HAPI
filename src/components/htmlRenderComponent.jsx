@@ -4,21 +4,30 @@ import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react
 
 export const HTMLRender = class HTMLRender extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+    return (
+      <div>
+        <div>{this.renderJson()}</div>
+      </div>
+    );
+  }
+
   renderJson() {
-    if (this.state.response) {
-      let json = JSON.parse(this.state.response);
-      console.log(json);
+    if (this.props.data) {
+      let json = JSON.parse(this.props.data);
 
       if (Array.isArray(json)) {
-        console.log(json);
-
         return json.map((item, index) =>
           <div key={index}>
 
             <div><h1>{item.tittel}</h1></div>
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
             <CollapsibleComponent name={item.id}> 
-              {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:''} 
+              {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:null} 
 
               <CollapsibleContent>
                 <div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div>
@@ -68,8 +77,9 @@ export const HTMLRender = class HTMLRender extends React.Component {
             <div><h1>{item.tittel}</h1></div>
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
             <CollapsibleComponent>
-            {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:null} 
+            {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead> : null} 
             <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div></CollapsibleContent>
+              
               <CollapsibleHead><h2>Metadata</h2></CollapsibleHead>
 
               <CollapsibleContent>
@@ -96,11 +106,11 @@ export const HTMLRender = class HTMLRender extends React.Component {
                   </tr>
 
                   <tr>
-                    <td style={{ fontWeight: "bold" }}>Code system</td><td>{item.koder.ICPC - 2}</td>
+                    <td style={{ fontWeight: "bold" }}>Code system ICPC-2</td><td>{item.koder['ICPC-2'] ? item.koder['ICPC-2'][0] : ''}</td>
                   </tr>
 
                   <tr>
-                    <td style={{ fontWeight: "bold" }}>Code system</td><td>{item.koder.ICD - 10}</td>
+                    <td style={{ fontWeight: "bold" }}>Code system ICPC-2</td><td>{item.koder['ICD-10'] ? item.koder['ICD-10'][0] : ''}</td>
                   </tr>
 
                   <tr>
@@ -123,9 +133,13 @@ export const HTMLRender = class HTMLRender extends React.Component {
                     <td style={{ fontWeight: "bold" }}>HAPI id</td><td>{(item.tekniskeData && item.tekniskeData.HapiId) ? item.tekniskeData.HapiId : ''}</td>
                   </tr>
 
-                  <tr>
-                    <td colSpan="2">{this.renderLinks(item.links)}</td>
-                  </tr>
+                  {
+                    Array.isArray(item.links) ? 
+                    <tr>
+                      <td colSpan="2">{this.renderLinks(item.links)}</td>
+                    </tr>
+                    : null
+                  }
 
                 </tbody></table>
 
@@ -150,7 +164,7 @@ export const HTMLRender = class HTMLRender extends React.Component {
           </div>);
       }
     }
-  return 'some txt';
+  return '';
   }
 
 
@@ -183,3 +197,4 @@ export const HTMLRender = class HTMLRender extends React.Component {
   }
 
 }
+export default HTMLRender;
