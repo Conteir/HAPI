@@ -265,7 +265,12 @@ class MyPage extends React.Component {
 
   render() {
     return (
+      
       <div>
+        <div class="jumbotron text-center">
+  <h1>HAPI search</h1>
+  <p>Get content from Helsedirektoratet</p> 
+</div>
 
         <form onSubmit={this.mySubmitHandler}>
           <div class="row">
