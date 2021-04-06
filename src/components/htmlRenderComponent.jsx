@@ -1,8 +1,8 @@
-/*import React from 'react';
+import React from 'react';
 import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 
 
-class HTMLRender extends React.Component {
+export const HTMLRender = class HTMLRender extends React.Component {
 
   renderJson() {
     if (this.state.response) {
@@ -150,7 +150,7 @@ class HTMLRender extends React.Component {
           </div>);
       }
     }
-  return '';
+  return 'some txt';
   }
 
 
@@ -182,12 +182,4 @@ class HTMLRender extends React.Component {
       </div>);
   }
 
-
-  render() {
-    return <div><h1>{HTMLRender}</h1></div>
-  }
-
 }
-
-export default HTMLRender;
-*/

@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-//import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
+import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 import { enviroments } from './config.ts';
 //import HTMLRender from './components/HTMLRenderComponent.js';
+import { Hanna} from './components/test.jsx';
+import { HTMLRender} from './components/htmlRenderComponent.jsx';
+
 
 class MyPage extends React.Component {
 
@@ -265,6 +268,10 @@ class MyPage extends React.Component {
   render() {
     return (
       <div>
+
+        <HTMLRender/>
+        <Hanna/>
+       
       
         <form onSubmit={this.mySubmitHandler}>
         <select name="enviroment" id="enviroment"
@@ -312,8 +319,6 @@ class MyPage extends React.Component {
           />
         </form>
 
-
-        <div>here is the JSON part</div>
         <div><pre>{this.state.response}</pre></div>
         <div><pre><h4>{this.state.url}</h4></pre></div>
 
