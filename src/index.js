@@ -5,7 +5,6 @@ import './index.css';
 //import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 import { enviroments } from './config.ts';
 //import HTMLRender from './components/HTMLRenderComponent.js';
-import { Eirik, Hanna} from './components/test.jsx';
 
 class MyPage extends React.Component {
 
@@ -266,8 +265,7 @@ class MyPage extends React.Component {
   render() {
     return (
       <div>
-        <Hanna />
-<Eirik />
+      
         <form onSubmit={this.mySubmitHandler}>
         <select name="enviroment" id="enviroment"
             onChange={evt => this.ChangeHandlerEnviroment(evt)}
