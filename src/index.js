@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
+//import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 import { enviroments } from './config.ts';
 
 
@@ -88,7 +88,7 @@ class MyPage extends React.Component {
     });
   }
 
-  renderJson() {
+ /* renderJson() {
     if (this.state.response) {
       let json = JSON.parse(this.state.response);
       console.log(json);
@@ -230,10 +230,10 @@ class MyPage extends React.Component {
       }
     }
     return '';
-  }
+  }*/
 
 
-  renderLinks(links) {
+ /* renderLinks(links) {
     return links.map((item, index) =>
       <div key={index}>
 
@@ -260,7 +260,7 @@ class MyPage extends React.Component {
 
       </div>);
   }
-
+*/
 
   render() {
     return (
@@ -313,7 +313,7 @@ class MyPage extends React.Component {
         </form>
 
 
-        <div>{this.renderJson()}</div>
+       {/* <div>{this.renderJson()}</div>*/}
         <div>here is the JSON part</div>
         <div><pre>{this.state.response}</pre></div>
         <div><pre><h4>{this.state.url}</h4></pre></div>
