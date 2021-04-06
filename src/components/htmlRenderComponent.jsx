@@ -3,9 +3,7 @@ import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react
 
 export const HTMLRender = class HTMLRender extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
+
 
   render () {
     return (
