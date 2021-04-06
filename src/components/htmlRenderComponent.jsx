@@ -107,7 +107,7 @@ export const HTMLRender = class HTMLRender extends React.Component {
                   </tr>
 
                   <tr>
-                    <td style={{ fontWeight: "bold" }}>Code system ICPC-2</td><td>{item.koder && item.koder['ICD-10'] ? item.koder['ICD-10'][0] : ''}</td>
+                    <td style={{ fontWeight: "bold" }}>Code system ICD-10</td><td>{item.koder && item.koder['ICD-10'] ? item.koder['ICD-10'][0] : ''}</td>
                   </tr>
 
                   <tr>
