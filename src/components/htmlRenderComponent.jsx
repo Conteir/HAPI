@@ -1,7 +1,6 @@
 import React from 'react';
 import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 
-
 export const HTMLRender = class HTMLRender extends React.Component {
 
   constructor(props) {
@@ -132,7 +131,7 @@ export const HTMLRender = class HTMLRender extends React.Component {
                   <tr>
                     <td style={{ fontWeight: "bold" }}>HAPI id</td><td>{(item.tekniskeData && item.tekniskeData.HapiId) ? item.tekniskeData.HapiId : ''}</td>
                   </tr>
-
+                  
                   {
                     Array.isArray(item.links) ? 
                     <tr>
