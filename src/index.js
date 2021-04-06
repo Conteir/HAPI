@@ -268,13 +268,12 @@ class MyPage extends React.Component {
       
       <div>
         <div class="jumbotron text-center">
-  <h1>HAPI search</h1>
+  <h1>Search HAPI</h1>
   <p>Get content from Helsedirektoratet</p> 
 </div>
 
         <form onSubmit={this.mySubmitHandler}>
-          <div class="row">
-            <div class="col">
+        <div class="form-group">
               <select name="enviroment" id="enviroment"
                 onChange={evt => this.ChangeHandlerEnviroment(evt)}
               >
@@ -285,15 +284,14 @@ class MyPage extends React.Component {
                 <option value="qa">QA</option>
 
               </select>
-            </div>
+           
           </div>
 <div class="row">
 <div class="col">
           <p>Please provide either HAPI-id or code from a code system</p>
           </div>
           </div>
-          <div class="row">
-          <div class="col-sm-2">
+          <div class="form-group">
           <input
             id="id"
             type='text'
@@ -303,10 +301,10 @@ class MyPage extends React.Component {
             onChange={evt => this.myChangeHandler(evt)}
           />
 </div>
-<div class="col-sm-1">
+<div class="form-group">
           <span className="marginRight">or</span>
 </div>
-<div class="col-sm-2">
+<div class="form-group">
           <select name="codeSystem" id="codeSystem"
             onChange={evt => this.ChangeHandlerCodeSystem(evt)}
           >
@@ -317,7 +315,7 @@ class MyPage extends React.Component {
             <option value="SNOMED-CT">SNOMED-CT</option>
           </select>
 </div>
-<div class="col-sm-2">
+<div class="form-group">
           <input
             type='text'
             autoComplete="on"
@@ -327,13 +325,13 @@ class MyPage extends React.Component {
             onChange={evt => this.ChangeHandlerCode(evt)}
           />
 </div>
-<div class="col-sm-2">
+<div class="form-group">
           <input
             type='submit'
             value="поиск"
           />
           </div>
-          </div>
+      
         </form>
 
 
