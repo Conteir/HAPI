@@ -23,10 +23,16 @@ export const codeSystems = [
   
   export const enviroments = [
     {
-      id: "test",
-      title: "Test",
+      id: "test-bt",
+      title: "Test BT",
       url: "https://helsedirektoratet-bt.azure-api.net/innhold/innhold",
       key: "143e448642124111b8c5e4d7e00d1975",
+    },
+    {
+      id: "test-st",
+      title: "Test ST",
+      url: "https://helsedirektoratet-st.azure-api.net/innhold/innhold",
+      key: "663f23169cae4c8785ec48defa793c23",
     },
     {
       id: "qa",
