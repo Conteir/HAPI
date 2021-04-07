@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { enviroments } from './config.ts';
 import HTMLRender from './components/htmlRenderComponent.jsx';
+import Loader from './components/loaderComponent.jsx'
+import { Spinner } from 'reactstrap';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class MyPage extends React.Component {
 
@@ -13,6 +16,7 @@ class MyPage extends React.Component {
     super(props);
 
     this.state = {
+      showSpinner: 'false',
       uglyId: '',
       codeSystem: '',
       code: '',
@@ -20,11 +24,9 @@ class MyPage extends React.Component {
       response: '',
       records: [],
       enviroment: 'prod',
-
     };
 
   }
-
 
   mySubmitHandler = (event) => {
     event.preventDefault();
@@ -91,6 +93,12 @@ class MyPage extends React.Component {
   render() {
     return (
       <div>
+
+        <div>
+          <Spinner><Loader/></Spinner>
+        </div>
+       
+
         <div className="jumbotron text-center">
           <h1>Search HAPI</h1>
           <p>Get content from Helsedirektoratet</p> 
@@ -157,7 +165,7 @@ class MyPage extends React.Component {
             <div className="form-group">
               <input
                 type='submit'
-                value="поиск"
+                value="Search"
               />
             </div>
                   
