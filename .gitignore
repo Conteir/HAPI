@@ -2,3 +2,4 @@ node_modules/.cache/babel-loader/
 node_modules/.cache/babel-loader/terser-webpack-plugin
 src/.DS_Store
 .DS_Store
+node_modules
