@@ -112,7 +112,8 @@ class MyPage extends React.Component {
               >
 
                 <option value="prod">Production</option>
-                <option value="test">Test</option>
+                <option value="test-bt">Test BT</option>
+                <option value="test-st">Test ST</option>
                 <option value="qa">QA</option>
 
               </select>  
