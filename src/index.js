@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { enviroments } from './config.ts';
 import HTMLRender from './components/htmlRenderComponent.jsx';
-import Loader from './components/loaderComponent.jsx'
 import { Spinner } from 'reactstrap';
 
 
@@ -16,20 +15,23 @@ class MyPage extends React.Component {
     super(props);
 
     this.state = {
-      showSpinner: 'false',
+      showSpinner: false,
       uglyId: '',
       codeSystem: '',
       code: '',
       url: '',
       response: '',
       records: [],
-      enviroment: 'prod',
+      enviroment: 'prod'
     };
 
   }
 
   mySubmitHandler = (event) => {
     event.preventDefault();
+
+    this.setState({ response: '' });
+    this.setState({ showSpinner: true });
 
     //const urlAddress = 'https://api.helsedirektoratet.no/innhold/innhold';
     const enviroment = this.state.enviroment;
@@ -56,7 +58,10 @@ class MyPage extends React.Component {
       }
     )
       .then(response => response.json())
-      .then(data => this.responseHandler(data));
+      .then(data => {
+        this.responseHandler(data);
+        this.setState({ showSpinner: false });
+      }, errorResponse => this.setState({ showSpinner: false }));
   }
 
   responseHandler = (data) => {
@@ -93,11 +98,6 @@ class MyPage extends React.Component {
   render() {
     return (
       <div>
-
-        <div>
-          <Spinner><Loader/></Spinner>
-        </div>
-       
 
         <div className="jumbotron text-center">
           <h1>Search HAPI</h1>
@@ -169,7 +169,9 @@ class MyPage extends React.Component {
                 value="Search"
               />
             </div>
-                  
+
+             {this.state.showSpinner ? <Spinner color="success" /> : null}      
+            
         </form>
 
         <div>
