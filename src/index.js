@@ -102,6 +102,20 @@ class MyPage extends React.Component {
         <div className="jumbotron text-center">
           <h1>Search HAPI</h1>
           <p>Get content from Helsedirektoratet</p> 
+       
+         
+
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a class="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">test</div>
+            <div class="tab-pane fade" id="nav-newpage" role="tabpanel" aria-labelledby="nav-newpage-tab">test2</div>
+          </div>
+        
         </div>
 
         <form onSubmit={this.mySubmitHandler}>
