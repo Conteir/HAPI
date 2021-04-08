@@ -6,6 +6,11 @@ import './index.css';
 import { enviroments } from './config.ts';
 import HTMLRender from './components/htmlRenderComponent.jsx';
 import { Spinner } from 'reactstrap';
+import { Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { NewPage } from './components/NewPage.jsx';
+
+
 
 
 
@@ -22,7 +27,9 @@ class MyPage extends React.Component {
       url: '',
       response: '',
       records: [],
-      enviroment: 'prod'
+      enviroment: 'prod',
+      redirect: false
+
     };
 
   }
@@ -31,7 +38,6 @@ class MyPage extends React.Component {
     event.preventDefault();
 
     this.setState({ response: '' });
-    this.setState({ showSpinner: true });
 
     //const urlAddress = 'https://api.helsedirektoratet.no/innhold/innhold';
     const enviroment = this.state.enviroment;
@@ -41,12 +47,16 @@ class MyPage extends React.Component {
     let key = setEnviroments.key
     if (this.state.uglyId) {
       url += '/' + this.state.uglyId;
-    } else {
+    } else if(this.state.codeSystem && this.state.code) {
       url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
+    } else {
+      alert("Neither HAPI-id nor Code defined!")
+      return;
     }
 
 
     this.setState({ url: url });
+    this.setState({ showSpinner: true });
 
     fetch(url,
       {
@@ -61,7 +71,9 @@ class MyPage extends React.Component {
       .then(data => {
         this.responseHandler(data);
         this.setState({ showSpinner: false });
-      }, errorResponse => this.setState({ showSpinner: false }));
+      }, () => this.setState({ showSpinner: false }))
+     
+      ;
   }
 
   responseHandler = (data) => {
@@ -69,7 +81,7 @@ class MyPage extends React.Component {
       this.setState({
         response: JSON.stringify(data, null, 2)
       });
-    }
+    } 
   }
 
   myChangeHandler = (event) => {
@@ -94,6 +106,29 @@ class MyPage extends React.Component {
     });
   }
 
+  /*setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return (
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/" component = {Home}>
+             <Redirect to='/newpage' />
+            </Route>
+        </Switch>
+        </div>
+      </Router>
+      )
+    }
+  }
+
+*/
 
   render() {
     return (
@@ -103,18 +138,60 @@ class MyPage extends React.Component {
           <h1>Search HAPI</h1>
           <p>Get content from Helsedirektoratet</p> 
        
-         
+         {/* <nav class="nav"> 
+        
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/newpage">New page</a>
+            
+          </nav>
+         */}
 
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-              <a class="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
+          {/*<nav>
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
             </div>
           </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">test</div>
-            <div class="tab-pane fade" id="nav-newpage" role="tabpanel" aria-labelledby="nav-newpage-tab">test2</div>
+          <div className="tab-content" id="nav-tabContent">
+            <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+            <div className="tab-pane fade" id="nav-newpage" role="tabpanel" aria-labelledby="nav-newpage-tab">...</div>
+          </div>*/}
+
+          <Router>
+      <div>
+          <nav>
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
+            </div>
+          </nav>
+
+        <hr />
+
+        {/*
+          A <Switch> looks through all its children <Route>
+          elements and renders the first one whose path
+          matches the current URL. Use a <Switch> any time
+          you have multiple routes, but you want only one
+          of them to render at a time
+        */}
+        <Switch>
+          <Route exact path="/">
+          </Route>
+          <Route path="/newpage">
+            <NewPage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+
+          {/*<div>
+            <Router>
+            {this.renderRedirect}
+            <button onClick={this.setRedirect}>Redirect</button>
+            </Router>
           </div>
+          */}
         
         </div>
 
@@ -181,6 +258,7 @@ class MyPage extends React.Component {
               <input
                 type='submit'
                 value="Search"
+                disabled={!(this.state.uglyId || (this.state.codeSystem && this.state.code))}
               />
             </div>
 
@@ -197,9 +275,10 @@ class MyPage extends React.Component {
         
       </div>
     );
-  }
+  };
 
 }
+
 
 ReactDOM.render(<MyPage />, document.getElementById('root'));
 
