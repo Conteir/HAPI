@@ -41,7 +41,7 @@ class MyPage extends React.Component {
     let key = setEnviroments.key
     if (this.state.uglyId) {
       url += '/' + this.state.uglyId;
-    } else if(this.state.codeSystem && this.state.code) {
+    } else {
       url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
     } 
     /*else {
