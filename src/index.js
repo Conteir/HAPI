@@ -10,9 +10,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NewPage } from './components/NewPage.jsx';
 
 
-
-
-
 class MyPage extends React.Component {
 
   constructor(props) {
@@ -26,9 +23,7 @@ class MyPage extends React.Component {
       url: '',
       response: '',
       records: [],
-      enviroment: 'prod',
-      redirect: false
-
+      enviroment: 'prod'
     };
 
   }
@@ -48,10 +43,11 @@ class MyPage extends React.Component {
       url += '/' + this.state.uglyId;
     } else if(this.state.codeSystem && this.state.code) {
       url += '?kodeverk=' + this.state.codeSystem + "&kode=" + this.state.code;
-    } else {
+    } 
+    /*else {
       alert("Neither HAPI-id nor Code defined!")
       return;
-    }
+    }*/
 
 
     this.setState({ url: url });
@@ -88,46 +84,25 @@ class MyPage extends React.Component {
       uglyId: event.target.value
     });
   }
+
   ChangeHandlerCode = (event) => {
     this.setState({
       code: event.target.value
     });
   }
+
   ChangeHandlerCodeSystem = (event) => {
     this.setState({
       codeSystem: event.target.value
     });
   }
+
   ChangeHandlerEnviroment = (event) => {
     this.setState({
       enviroment: event.target.value
-
     });
   }
 
-  /*setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
-  }
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return (
-      <Router>
-        <div>
-          <Switch>
-            <Route path="/" component = {Home}>
-             <Redirect to='/newpage' />
-            </Route>
-        </Switch>
-        </div>
-      </Router>
-      )
-    }
-  }
-
-*/
 
   render() {
     return (
@@ -136,62 +111,27 @@ class MyPage extends React.Component {
         <div className="jumbotron text-center">
           <h1>Search HAPI</h1>
           <p>Get content from Helsedirektoratet</p> 
-       
-         {/* <nav class="nav"> 
-        
-            <a class="nav-link" href="/">Home</a>
-            <a class="nav-link" href="/newpage">New page</a>
-            
-          </nav>
-         */}
-
-          {/*<nav>
-            <div className="nav nav-tabs" id="nav-tab" role="tablist">
-              <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-              <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
-            </div>
-          </nav>
-          <div className="tab-content" id="nav-tabContent">
-            <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-            <div className="tab-pane fade" id="nav-newpage" role="tabpanel" aria-labelledby="nav-newpage-tab">...</div>
-          </div>*/}
+      
 
           <Router>
-      <div>
-          <nav>
-            <div className="nav nav-tabs" id="nav-tab" role="tablist">
-              <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-              <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
-            </div>
-          </nav>
+            <div>
+                <nav>
+                  <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                    <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
+                  </div>
+                </nav>
+       
+                <Switch>
+                  <Route exact path="/">
+                  </Route>
+                  <Route path="/newpage">
+                    <NewPage />
+                  </Route>
+                </Switch>
 
-        <hr />
-
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
-        <Switch>
-          <Route exact path="/">
-          </Route>
-          <Route path="/newpage">
-            <NewPage />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-
-          {/*<div>
-            <Router>
-            {this.renderRedirect}
-            <button onClick={this.setRedirect}>Redirect</button>
-            </Router>
-          </div>
-          */}
-        
+              </div>
+          </Router>
         </div>
 
         <form onSubmit={this.mySubmitHandler}>
