@@ -6,7 +6,6 @@ import './index.css';
 import { enviroments } from './config.ts';
 import HTMLRender from './components/htmlRenderComponent.jsx';
 import { Spinner } from 'reactstrap';
-import { Redirect } from 'react-router-dom'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NewPage } from './components/NewPage.jsx';
 
@@ -258,7 +257,7 @@ class MyPage extends React.Component {
               <input
                 type='submit'
                 value="Search"
-                disabled={!(this.state.uglyId || (this.state.codeSystem && this.state.code))}
+                disabled={!(this.state.uglyId || this.state.codeSystem || this.state.code)}
               />
             </div>
 
