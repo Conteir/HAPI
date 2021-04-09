@@ -16,7 +16,7 @@ export const NewPage = class NewPage extends React.Component {
                 <div className="col-lg-5">
                   <h1 className="font-weight-light">This is a new page</h1>
                   <p>
-                    Hello, Eirik:)
+                    Eirik geroj, Hanna geroj, so we are the heroes... not just for one day :)
                   </p>
                 </div>
               </div>
