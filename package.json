@@ -48,6 +48,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.7",
     "@types/reactstrap": "^8.7.2"
   }
 }
