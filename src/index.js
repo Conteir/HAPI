@@ -117,15 +117,14 @@ class MyPage extends React.Component {
             <div>
                 <nav>
                   <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a className="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-                    <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="true">New page</a>
+                    <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                    <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
                   </div>
                 </nav>
-       
                 <Switch>
-                  <Route exact path="/">
+                  <Route exact path="/" >
                   </Route>
-                  <Route path="/newpage">
+                  <Route path="/newpage" component={NewPage}>
                     <NewPage />
                   </Route>
                 </Switch>
