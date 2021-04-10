@@ -3,8 +3,6 @@ import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react
 
 export const HTMLRender = class HTMLRender extends React.Component {
 
-
-
   render () {
     return (
       <div>
@@ -23,6 +21,7 @@ export const HTMLRender = class HTMLRender extends React.Component {
 
             <div><h1>{item.tittel}</h1></div>
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+
             <CollapsibleComponent name={item.id}> 
               {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead>:null} 
 
@@ -64,15 +63,13 @@ export const HTMLRender = class HTMLRender extends React.Component {
       } else {
         //if object (checking)
         let item = json;
-        console.log(Array.isArray(item));
-        console.log('object');
 
         return (
           <div>
 
-
             <div><h1>{item.tittel}</h1></div>
             <div dangerouslySetInnerHTML={{ __html: item.tekst }}></div>
+            
             <CollapsibleComponent>
             {item.data.rasjonale != null ? <CollapsibleHead><h2>Rasjonale</h2></CollapsibleHead> : null} 
             <CollapsibleContent><div dangerouslySetInnerHTML={{ __html: item.data.rasjonale }}></div></CollapsibleContent>
