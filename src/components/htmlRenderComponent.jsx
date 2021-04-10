@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 
 export const HTMLRender = class HTMLRender extends React.Component {
