@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { CollapsibleComponent, CollapsibleHead, CollapsibleContent } from "react-collapsible-component";
 
 export const HTMLRender = class HTMLRender extends React.Component {
+
 
   render () {
     return (
@@ -14,8 +15,11 @@ export const HTMLRender = class HTMLRender extends React.Component {
   renderJson() {
     if (this.props.data) {
       let json = JSON.parse(this.props.data);
+      if (Array.isArray(json) && window.location.href.indexOf('newpage')  > -1) 
+{console.log('newpage')}
 
-      if (Array.isArray(json)) {
+      else if (Array.isArray(json) && !window.location.href.indexOf('newpage') > -1) 
+     {
         return json.map((item, index) =>
           <div key={index}>
 
@@ -191,4 +195,5 @@ export const HTMLRender = class HTMLRender extends React.Component {
   }
 
 }
+
 export default HTMLRender;

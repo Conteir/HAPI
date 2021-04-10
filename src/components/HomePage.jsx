@@ -33,7 +33,7 @@ export const HomePage = class HomePage extends React.Component {
       const enviroment = this.state.enviroment;
       let setEnviroments = enviroments.find(o => o.id === enviroment);
   
-      let url = setEnviroments.url;
+      let url = setEnviroments.url + 'innhold';
       let key = setEnviroments.key
       if (this.state.uglyId) {
         url += '/' + this.state.uglyId;

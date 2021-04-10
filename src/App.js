@@ -14,8 +14,8 @@ export const App = class App extends React.Component {
 
             <nav>
               <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                <a className="nav-item nav-link active" id="nav-homepage-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-homepage" aria-selected="true">Home page</a>
-                <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">New page</a>
+                <a className="nav-item nav-link active" id="nav-homepage-tab" data-toggle="tab" href="/" role="tab" aria-controls="nav-homepage" aria-selected="true">Search HAPI</a>
+                <a className="nav-item nav-link" id="nav-newpage-tab" data-toggle="tab" href="/newpage" role="tab" aria-controls="nav-newpage" aria-selected="false">Get ID</a>
               </div>
             </nav>
 
