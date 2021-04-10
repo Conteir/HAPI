@@ -104,8 +104,9 @@ export const NewPage = class NewPage extends React.Component {
               >
                 <option value="" select="default">Choose content type</option>
                 <option value="retningslinjer">Retningslinjer</option>
-                <option value="pakkeforløp">Pakkerforløp</option>
+                <option value="pakkeforlop">Pakkerforløp (feil i innholdstype)</option>
                 <option value="nasjonal-veileder">Veiledere</option>
+                <option value="artikler">Artikler</option>
               </select>
             </div>
 

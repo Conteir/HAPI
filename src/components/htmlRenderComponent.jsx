@@ -21,7 +21,7 @@ export const HTMLRender = class HTMLRender extends React.Component {
         return json.map((item, index) =>
           <div key={index}>
 
-            <div>{item.tittel}</div>
+            <div>{item.kortTittel}</div>
             <div>{item.id}</div>
             <p> </p>
           </div>
